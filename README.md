@@ -10,13 +10,8 @@
 
 **Section:** C-1L
 
-## Things you did in your code
-These are what I implemented in my code:
-
-List them down here...
-
 ## Key Takeaways from the Exercise
-Explain what you felt here...
+Doing this exercise felt very exciting, I really saw how Node.js, Express and MongoDB could be connected with each other and programmers like us get to program with tools like these on creating Web Servers and how it would have a Database connected to it. Took me a while to do this exercise, but in the end I still had fun.
 
 ## References
 - Week 06 Lab Handout - MongoDB and Database Integration
