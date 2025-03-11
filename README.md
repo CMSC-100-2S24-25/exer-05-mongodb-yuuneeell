@@ -21,6 +21,5 @@ Explain what you felt here...
 ## References
 - Week 06 Lab Handout - MongoDB and Database Integration
 - https://www.mongodb.com/docs/
-- https://nodejs.org/api/fs.html
 - https://expressjs.com/en/guide/routing.html
 - https://www.npmjs.com/package/needle
