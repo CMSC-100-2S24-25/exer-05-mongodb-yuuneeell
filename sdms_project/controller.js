@@ -65,22 +65,24 @@ const ctrlrFunctions = {
         const { searchFName, updateLName } = req.body;
 
         // variable to check whether find method returns a non-empty array or not
-        let findStudent = await Student.findOne({
+        let findStudent = await Student.find({
             fname: searchFName
         });
 
         // if either below returns true, return error message
-        if (findStudent === undefined || findStudent.length == 0) {
+        if (findStudent.length === 0) {
             return res.send('updateStudent(): Student not found.\n');
         }
 
         // updates the lname of the searched fname
         await Student.updateOne(
             { fname: searchFName },
-            { $rename: { lname: updateLName } }
+            { $set: { lname: updateLName } }
         )
 
-        res.send(`Updated Student Data:\n`, await Student.findOne({ fname: searchFName }));
+        console.log(await Student.find({ fname: searchFName }));
+
+        res.send(`Student data updated successfully.\n`);
     },
     // removeUser
     removeUser: async (req, res) => {
@@ -89,19 +91,21 @@ const ctrlrFunctions = {
         const { stdnum } = req.body;
 
         // variable to check whether find method returns a non-empty array or not
-        let findStudent = await Student.findOne({
+        let findStudent = await Student.find({
             stdnum: stdnum
         });
 
+        console.log(`findStudent:`, findStudent); // for debugging
+
         // if either below returns true, return error message
-        if (findStudent === undefined || findStudent.length == 0) {
-            return res.send('removeUser(): Student not found.\n');
+        if (findStudent.length === 0) {
+            return res.send(`removeUser(): Student ${stdnum} not found.\n`);
         }
 
         // deletes the student data of the requested stdnum
         await Student.deleteOne({ stdnum: stdnum });
 
-        res.send(`Student Data Removed Successfully.\n`);
+        res.send(`Student ${stdnum} removed successfully.\n`);
     },
     // purgeDatabase
     purgeDatabase: async (req, res) => {
@@ -116,11 +120,19 @@ const ctrlrFunctions = {
     },
     // getUserData
     getUserData: async (req, res) => {
-        res.send(await Student.find({ fname: req.body.fname }));
+        // store to student the returned array from find function
+        const student = await Student.find({ stdnum: req.query.stdnum });
+
+        // check whether student exist
+        if (student.length > 0) {
+            res.send(student);
+        } else {
+            res.send([]);
+        }
     },
-    // getAllMembers
+    // getAllMembers: function that fetches all members of the database
     getAllMembers: async (req, res) => {
-        res.send(await Student.find({ fname: req.body.fname }));
+        res.send(await Student.find({}));
     },
 }
 
